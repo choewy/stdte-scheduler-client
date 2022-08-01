@@ -1,15 +1,19 @@
+import { resolve } from 'path';
 import { registerAs } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+
+const entitiesPath = resolve(__dirname + './../**/entities/*.entity{.ts,.js}');
 
 export default registerAs(
   'typeorm',
   (): TypeOrmModuleOptions => ({
-    host: String(process.env.MYSQL_HOST || '127.0.0.1'),
-    port: Number(process.env.MYSQL_PORT || '3306'),
-    username: String(process.env.MYSQL_USER || 'root'),
-    password: String(process.env.MYSQL_PASSWORD || 'root'),
-    database: String(process.env.MYSQL_DBNAME || ''),
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
+    type: 'mysql',
+    host: String(process.env.DATABASE_HOST || '127.0.0.1'),
+    port: Number(process.env.DATABASE_PORT || '3306'),
+    username: String(process.env.DATABASE_USER || 'root'),
+    password: String(process.env.DATABASE_PASSWORD || 'root'),
+    database: String(process.env.DATABASE_DBNAME || ''),
+    entities: [entitiesPath],
     synchronize: true,
     logging: true,
   }),

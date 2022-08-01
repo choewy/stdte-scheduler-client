@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Patch } from '@nestjs/common';
+import { EditUserProfileDto } from './dto';
 import { UserService } from './user.service';
 
-@Controller('users')
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -12,7 +13,7 @@ export class UserController {
 
   // TODO : DTO class
   @Patch('/me')
-  async editProfile(@Body() editProfileDto: any) {
-    return editProfileDto;
+  async editProfile(@Body() editUserProfileDto: EditUserProfileDto) {
+    return editUserProfileDto;
   }
 }

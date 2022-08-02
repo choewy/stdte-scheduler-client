@@ -8,8 +8,10 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-declare global {
-  type PaymentMethod = 'card' | 'mobile' | 'point';
+export enum PaymentMethod {
+  card = 'card',
+  mobild = 'modile',
+  point = 'point',
 }
 
 @Entity()

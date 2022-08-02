@@ -14,7 +14,7 @@ export const SWAGGER_SETTING: SwaggerSetting = {
   bearer: {
     type: 'http',
     scheme: 'bearer',
-    name: 'JWT',
+    name: 'JsonWebToken',
     in: 'header',
   },
 };

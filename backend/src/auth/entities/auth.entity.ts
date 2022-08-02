@@ -5,17 +5,19 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-declare global {
-  type OAuthPlatform = 'gmail' | 'kakao' | 'twitch';
+export enum Platform {
+  kakao = 'kakao',
+  gmail = 'gmail',
+  twitch = 'twitch',
 }
 
 @Entity()
-export class OAuth {
+export class Auth {
   @PrimaryGeneratedColumn('uuid')
   readonly id: string;
 
   @Column('varchar')
-  platform: OAuthPlatform;
+  platform: Platform;
 
   @Column('varchar')
   accessToken: string;

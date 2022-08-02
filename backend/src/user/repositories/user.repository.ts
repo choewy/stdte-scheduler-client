@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, UpdateWriteOpResult } from 'typeorm';
 import { User } from '../entities';
 import { EditUserProfileDto } from '../dto';
 import { dataSourceProvider } from 'src/commons/providers';
@@ -9,7 +9,7 @@ export class UserRepository extends Repository<User> {
   editProfile: (
     userId: string,
     editUserProfileDto: EditUserProfileDto,
-  ) => Promise<void>;
+  ) => Promise<UpdateWriteOpResult>;
 }
 
 const methods: Partial<UserRepository> = {
@@ -23,7 +23,7 @@ const methods: Partial<UserRepository> = {
 
   // Edit User Profile Data
   async editProfile(userId, userEditProfileDto) {
-    await await this.update({ userId }, userEditProfileDto);
+    return await this.update({ userId }, userEditProfileDto);
   },
 };
 

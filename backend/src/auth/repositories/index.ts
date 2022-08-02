@@ -1,9 +1,9 @@
-import { OAuthRepository, OAuthRepositoryProvider } from './oauth.repository';
 import { UserRepository, UserRepositoryProvider } from './user.repository';
+import { AuthRepository, AuthRepositoryProvider } from './auth.repository';
 
 export {
-  OAuthRepository,
-  OAuthRepositoryProvider,
+  AuthRepository,
+  AuthRepositoryProvider,
   UserRepository,
   UserRepositoryProvider,
 };

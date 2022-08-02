@@ -12,11 +12,14 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   readonly id: string;
 
-  @Column('varchar')
-  name: string;
+  @Column('varchar', { default: null })
+  kakaoId: string;
 
-  @Column('varchar')
-  email: string;
+  @Column('varchar', { default: null })
+  gmailId: string;
+
+  @Column('varchar', { default: null })
+  twitchId: string;
 
   @CreateDateColumn()
   createdAt: Date;

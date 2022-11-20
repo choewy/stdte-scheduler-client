@@ -1,5 +1,5 @@
 import { useAuth } from '@/apis/auth';
-import { AppNavBar } from './common/components';
+import { AppNavBar, AppSideBar } from './common/components';
 import { SignInPage } from './pages/sign-in';
 
 const App = () => {
@@ -8,6 +8,7 @@ const App = () => {
   return (
     <div>
       <AppNavBar />
+      <AppSideBar />
       <SignInPage />
     </div>
   );

@@ -1,1 +1,2 @@
-export * from './app-bar';
+export * from './app-nav-bar';
+export * from './app-side-bar';

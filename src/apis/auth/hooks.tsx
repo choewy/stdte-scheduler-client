@@ -3,7 +3,7 @@ import { authState } from '@/states';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { UserStatus } from '.';
+import { UserStatus } from './enums';
 import { authApi } from './api';
 
 export const useAuthChecking = () => {
@@ -17,15 +17,17 @@ export const useAuthChecking = () => {
         auth.status === UserStatus.Wait &&
         location.pathname !== RoutePath.Wait.url[0]
       ) {
-        return navigate(RoutePath.Wait.url[0], { replace: true });
+        navigate(RoutePath.Wait.url[0], { replace: true });
       }
 
       if (
         auth.status === UserStatus.Reject &&
         location.pathname !== RoutePath.Block.url[0]
       ) {
-        return navigate(RoutePath.Block.url[0], { replace: true });
+        navigate(RoutePath.Block.url[0], { replace: true });
       }
+
+      return;
     }
 
     if (!auth) {
@@ -33,7 +35,12 @@ export const useAuthChecking = () => {
 
       if (accessToken) {
         if (!RoutePath.getSignPaths().includes(location.pathname)) {
-          navigate(RoutePath.Auth.url[0], { replace: true });
+          navigate(RoutePath.Auth.url[0], {
+            replace: true,
+            state: {
+              pathname: location.pathname,
+            },
+          });
         }
       }
 
@@ -43,5 +50,5 @@ export const useAuthChecking = () => {
         }
       }
     }
-  }, [location]);
+  }, []);
 };

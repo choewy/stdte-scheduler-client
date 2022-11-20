@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC } from 'react';
 import { authState } from '@/states';
 import { Avatar, Button, IconButton } from '@mui/material';
 import { useRecoilValue } from 'recoil';

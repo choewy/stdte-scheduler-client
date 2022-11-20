@@ -10,14 +10,7 @@ import {
   Logout as LogoutIcon,
   HowToReg as HowToRegIcon,
 } from '@mui/icons-material';
-
-export enum RouteGroup {
-  CommonTop = 0,
-  UserTop = 1,
-  VisitorTop = 2,
-  Outer = 3,
-  UserBottom = 4,
-}
+import { RouteGroup } from './enums';
 
 export class RoutePath {
   public static readonly Home = new RoutePath(

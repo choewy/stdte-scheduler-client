@@ -15,7 +15,7 @@ import { RouteGroup } from './enums';
 export class RoutePath {
   public static readonly Home = new RoutePath(
     RouteGroup.CommonTop,
-    ['/', null],
+    ['/', ''],
     '홈',
     HomeIcon,
     false,
@@ -23,7 +23,7 @@ export class RoutePath {
 
   public static readonly Auth = new RoutePath(
     RouteGroup.Hidden,
-    ['/auth', null],
+    ['/auth', ''],
     '인증',
     null,
     false,
@@ -31,7 +31,7 @@ export class RoutePath {
 
   public static readonly Wait = new RoutePath(
     RouteGroup.Hidden,
-    ['/wait', null],
+    ['/wait', ''],
     '가입 대기',
     null,
     false,
@@ -39,7 +39,7 @@ export class RoutePath {
 
   public static readonly Block = new RoutePath(
     RouteGroup.Hidden,
-    ['/block', null],
+    ['/block', ''],
     '가입 거절',
     null,
     false,
@@ -47,7 +47,7 @@ export class RoutePath {
 
   public static readonly SignIn = new RoutePath(
     RouteGroup.VisitorTop,
-    ['/signin', null],
+    ['/signin', ''],
     '로그인',
     LoginIcon,
     false,
@@ -55,7 +55,7 @@ export class RoutePath {
 
   public static readonly SignUp = new RoutePath(
     RouteGroup.VisitorTop,
-    ['/signup', null],
+    ['/signup', ''],
     '회원가입',
     HowToRegIcon,
     false,
@@ -63,7 +63,7 @@ export class RoutePath {
 
   public static readonly SignOut = new RoutePath(
     RouteGroup.UserBottom,
-    ['/signout', null],
+    ['/signout', ''],
     '로그아웃',
     LogoutIcon,
     false,
@@ -95,7 +95,7 @@ export class RoutePath {
 
   public static readonly GitHub = new RoutePath(
     RouteGroup.Outer,
-    ['https://github.com/STDTE-repo', null],
+    ['https://github.com/STDTE-repo', ''],
     'GitHub',
     GitHubIcon,
     true,
@@ -105,7 +105,7 @@ export class RoutePath {
     RouteGroup.Outer,
     [
       'https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=choewy32@gmail.com',
-      null,
+      '',
     ],
     'Contact',
     EmailIcon,
@@ -114,7 +114,7 @@ export class RoutePath {
 
   public constructor(
     private readonly group: number,
-    public readonly url: [string, string | null],
+    public readonly url: [string, string],
     public readonly text: string,
     public readonly Icon: SvgIconComponent | null,
     public readonly isBlank: boolean,

@@ -3,11 +3,12 @@ import { authApi, UserStatus } from '@/apis/auth';
 import { useSetSnakbarCallback } from '@/common/callbacks';
 import { RoutePath } from '@/common/constants';
 import { authState } from '@/states';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 const AuthPage: FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const setAuth = useSetRecoilState(authState);
   const setSnackbar = useSetSnakbarCallback();
@@ -19,11 +20,22 @@ const AuthPage: FC = () => {
       setAuth(data);
 
       if (data.status === UserStatus.Wait) {
-        return navigate(RoutePath.Wait.url[0], { replace: true });
+        navigate(RoutePath.Wait.url[0], { replace: true });
+        return;
       }
 
       if (data.status === UserStatus.Reject) {
-        return navigate(RoutePath.Block.url[0], { replace: true });
+        navigate(RoutePath.Block.url[0], { replace: true });
+        return;
+      }
+
+      if (location.state) {
+        const pathname = location.state.pathname;
+
+        if (!RoutePath.getVisitorPaths().includes(pathname)) {
+          navigate(pathname, { replace: true });
+          return;
+        }
       }
 
       navigate(RoutePath.Home.url[0], { replace: true });

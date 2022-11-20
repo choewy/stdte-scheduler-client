@@ -1,26 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useAuth } from '@/apis/auth';
+import { AppNavBar } from './common/components';
+import { SignInPage } from './pages/sign-in';
 
-function App() {
+const App = () => {
+  useAuth();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <AppNavBar />
+      <SignInPage />
     </div>
   );
-}
+};
 
 export default App;

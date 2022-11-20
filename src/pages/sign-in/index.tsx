@@ -1,72 +1,46 @@
-import { authApi } from '@/apis/auth';
-import { ExceptionResponse } from '@/core/axios';
-import { AxiosError } from 'axios';
-import {
-  ChangeEventHandler,
-  Dispatch,
-  FC,
-  FormEventHandler,
-  SetStateAction,
-  useCallback,
-  useState,
-} from 'react';
+import { FC, useState } from 'react';
+import { Box, Button } from '@mui/material';
+import { Email as EmailIcon, Lock as PasswordIcon } from '@mui/icons-material';
+import { TextFieldWithIcon } from '@/common/components';
+import { useInputValueChangeCallback } from '@/common/callbacks';
+import { useSignInCallback } from './callbacks';
 
-export const SignInPage: FC = () => {
+const SignInPage: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const onChangeEvent: (
-    setState: Dispatch<SetStateAction<string>>,
-  ) => ChangeEventHandler<HTMLInputElement> = (setState) =>
-    useCallback((e) => {
-      setState(e.target.value);
-    }, []);
-
-  const onSubmitEvent: FormEventHandler<HTMLFormElement> = useCallback(
-    async (e) => {
-      e.preventDefault();
-      try {
-        const { data } = await authApi.signIn({
-          email,
-          password,
-        });
-
-        return authApi.setCookies(data);
-      } catch (e) {
-        const error = e as AxiosError<ExceptionResponse>;
-
-        if (error.response?.data) {
-          const { status, name } = error.response.data;
-          switch (status) {
-            case 400:
-              return alert('이메일 또는 비밀번호 형식이 잘못되었습니다.');
-
-            case 401:
-              return alert('이메일 또는 비밀번호를 확인하세요.');
-
-            case 403:
-              switch (name) {
-                case '':
-                case '':
-              }
-          }
-        }
-      }
-    },
-    [email, password],
-  );
-
   return (
-    <div>
-      <form onSubmit={onSubmitEvent}>
-        <input type="email" value={email} onChange={onChangeEvent(setEmail)} />
-        <input
-          type="password"
-          value={password}
-          onChange={onChangeEvent(setPassword)}
-        />
-        <button type="submit">로그인</button>
-      </form>
-    </div>
+    <Box
+      component="form"
+      onSubmit={useSignInCallback({ email, password })}
+      sx={{
+        height: '400px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <TextFieldWithIcon
+        label="이메일"
+        Icon={EmailIcon}
+        placeholder="이메일을 입력하세요."
+        value={email}
+        onChange={useInputValueChangeCallback(setEmail)}
+      />
+      <TextFieldWithIcon
+        type="password"
+        label="비밀번호"
+        Icon={PasswordIcon}
+        placeholder="비밀번호를 입력하세요."
+        value={password}
+        onChange={useInputValueChangeCallback(setPassword)}
+      />
+      <Button variant="contained" type="submit">
+        로그인
+      </Button>
+    </Box>
   );
 };
+
+export default SignInPage;

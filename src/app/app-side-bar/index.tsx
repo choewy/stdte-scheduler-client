@@ -5,7 +5,7 @@ import { appState, authState } from '@/states';
 import { AppSideBarList } from './side-bar-list';
 import { RouteGroup, RoutePath } from '@/common/constants';
 
-export const AppSideBar: FC = () => {
+const AppSideBar: FC = () => {
   const [{ openSidebar }, setAppSetting] = useRecoilState(appState);
   const auth = useRecoilValue(authState);
 
@@ -54,3 +54,5 @@ export const AppSideBar: FC = () => {
     </Drawer>
   );
 };
+
+export default AppSideBar;

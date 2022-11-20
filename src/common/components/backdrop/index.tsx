@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { Backdrop, CircularProgress } from '@mui/material';
 
-export type AppSuspenseProps = {
+export type AppBackDropProps = {
   open: boolean;
 };
 
-export const AppSuspense: FC<AppSuspenseProps> = ({ open }) => {
+export const AppBackDrop: FC<AppBackDropProps> = ({ open }) => {
   return (
     <Backdrop
       sx={{

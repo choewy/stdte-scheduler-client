@@ -1,20 +1,19 @@
-import { FC, lazy } from 'react';
+import { FC } from 'react';
 
 import { useAuth } from '@/apis/auth';
 import { SignInPage, SignUpPage } from '@/pages';
-
-const AppNavBar = lazy(() => import('./app-nav-bar'));
-const AppSideBar = lazy(() => import('./app-side-bar'));
+import { Route, Routes } from 'react-router-dom';
+import { RoutePath } from '@/common/constants';
 
 const App: FC = () => {
   useAuth();
 
   return (
     <div>
-      <AppNavBar />
-      <AppSideBar />
-      <SignInPage />
-      <SignUpPage />
+      <Routes>
+        <Route path={RoutePath.SignIn.url.join('')} element={<SignInPage />} />
+        <Route path={RoutePath.SignUp.url.join('')} element={<SignUpPage />} />
+      </Routes>
     </div>
   );
 };

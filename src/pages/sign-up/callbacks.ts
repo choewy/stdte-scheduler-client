@@ -1,26 +1,27 @@
-import { authApi } from '@/apis/auth';
+import { authApi, SignUpBodyType } from '@/apis/auth';
+import { useSetSnakbarCallback } from '@/common/callbacks';
 import { RoutePath } from '@/common/constants';
 import { ExceptionResponse } from '@/core/axios';
 import { AxiosError } from 'axios';
 import { FormEventHandler, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetSnakbarCallback } from '@/common/callbacks';
 
-export type UseSignInCallbackProps = {
-  email: string;
-  password: string;
-};
-
-export const useSignInCallback = ({
+export const useSignUpCallback = ({
+  name,
   email,
   password,
-}: UseSignInCallbackProps): FormEventHandler<HTMLFormElement> => {
+  confirmPassword,
+}: SignUpBodyType): FormEventHandler<HTMLFormElement> => {
   const navigate = useNavigate();
   const setSnackbar = useSetSnakbarCallback();
 
   return useCallback(
     async (e) => {
       e.preventDefault();
+
+      if (name === '') {
+        return setSnackbar('이름을 입력하세요.');
+      }
 
       if (email === '') {
         return setSnackbar('이메일을 입력하세요.');
@@ -30,10 +31,16 @@ export const useSignInCallback = ({
         return setSnackbar('비밀번호를 입력하세요.');
       }
 
+      if (password !== confirmPassword) {
+        return setSnackbar('비밀번호가 일치하지 않습니다.');
+      }
+
       try {
-        const { data } = await authApi.signIn({
+        const { data } = await authApi.signUp({
+          name,
           email,
           password,
+          confirmPassword,
         });
 
         await authApi.setCookies(data);
@@ -47,20 +54,11 @@ export const useSignInCallback = ({
           const { status, name } = error.response.data;
           switch (status) {
             case 400:
-              return setSnackbar('이메일 또는 비밀번호 형식이 잘못되었습니다.');
-
-            case 401:
-              return setSnackbar('이메일 또는 비밀번호를 확인하세요.');
-
-            case 403:
-              switch (name) {
-                case '':
-                case '':
-              }
+              return alert('이메일 또는 비밀번호 형식이 잘못되었습니다.');
           }
         }
       }
     },
-    [email, password],
+    [name, email, password, confirmPassword],
   );
 };

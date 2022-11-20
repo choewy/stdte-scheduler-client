@@ -1,4 +1,4 @@
-import { FC, ChangeEventHandler } from 'react';
+import { FC } from 'react';
 import {
   FormControl,
   Input,
@@ -10,7 +10,7 @@ import { SvgIconComponent } from '@mui/icons-material';
 
 export type TextFieldWithIconProps = InputProps & {
   label: string;
-  Icon: SvgIconComponent;
+  Icon?: SvgIconComponent;
 };
 
 export const TextFieldWithIcon: FC<TextFieldWithIconProps> = ({
@@ -33,9 +33,11 @@ export const TextFieldWithIcon: FC<TextFieldWithIconProps> = ({
       <Input
         {...inputProps}
         startAdornment={
-          <InputAdornment position="start">
-            <Icon />
-          </InputAdornment>
+          Icon && (
+            <InputAdornment position="start">
+              <Icon />
+            </InputAdornment>
+          )
         }
       />
     </FormControl>

@@ -3,7 +3,12 @@ import { authState } from '@/states';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback, useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
-import { AuthResponseType, SignInBodyType, TokenResponseType } from './types';
+import {
+  AuthResponseType,
+  SignInBodyType,
+  SignUpBodyType,
+  TokenResponseType,
+} from './types';
 
 class AuthApi extends AxiosInstance {
   private readonly URL = '/auth';
@@ -47,6 +52,16 @@ class AuthApi extends AxiosInstance {
     return this.request({
       method: HttpMethod.Post,
       url: `${this.URL}/signin`,
+      data,
+    });
+  }
+
+  async signUp(
+    data: SignUpBodyType,
+  ): Promise<AxiosResponse<TokenResponseType>> {
+    return this.request({
+      method: HttpMethod.Post,
+      url: `${this.URL}/signup`,
       data,
     });
   }

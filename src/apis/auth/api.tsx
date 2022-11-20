@@ -1,8 +1,5 @@
-import { AxiosInstance, ExceptionResponse, HttpMethod } from '@/core/axios';
-import { authState } from '@/states';
-import { AxiosError, AxiosResponse } from 'axios';
-import { useCallback, useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { AxiosInstance, HttpMethod } from '@/core/axios';
+import { AxiosResponse } from 'axios';
 import {
   AuthResponseType,
   SignInBodyType,
@@ -12,6 +9,10 @@ import {
 
 class AuthApi extends AxiosInstance {
   private readonly URL = '/auth';
+
+  getAccessToken(): string {
+    return this.accessToken;
+  }
 
   async setCookies({
     accessToken,
@@ -68,33 +69,3 @@ class AuthApi extends AxiosInstance {
 }
 
 export const authApi = new AuthApi();
-
-export const useAuth = () => {
-  const setAuth = useSetRecoilState(authState);
-  const apiCall = useCallback(async () => {
-    try {
-      const { data } = await authApi.auth();
-      setAuth(data);
-    } catch (e) {
-      const error = e as AxiosError<ExceptionResponse>;
-
-      if (error.response?.data) {
-        const { name } = error.response.data as ExceptionResponse;
-
-        setAuth(null);
-
-        switch (name) {
-          case 'JwtInvalid':
-            return authApi.resetCookie();
-
-          case 'JwtExpired':
-            return alert(name);
-        }
-      }
-    }
-  }, [setAuth]);
-
-  useEffect(() => {
-    apiCall();
-  }, [apiCall]);
-};

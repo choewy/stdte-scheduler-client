@@ -44,7 +44,7 @@ export const useSignUpCallback = ({
         });
 
         await authApi.setCookies(data);
-        return navigate(RoutePath.Home.url[0], {
+        return navigate(RoutePath.Auth.url[0], {
           replace: true,
         });
       } catch (e) {

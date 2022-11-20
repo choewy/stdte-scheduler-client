@@ -21,6 +21,30 @@ export class RoutePath {
     false,
   );
 
+  public static readonly Auth = new RoutePath(
+    RouteGroup.Hidden,
+    ['/auth', null],
+    '인증',
+    null,
+    false,
+  );
+
+  public static readonly Wait = new RoutePath(
+    RouteGroup.Hidden,
+    ['/wait', null],
+    '가입 대기',
+    null,
+    false,
+  );
+
+  public static readonly Block = new RoutePath(
+    RouteGroup.Hidden,
+    ['/block', null],
+    '가입 거절',
+    null,
+    false,
+  );
+
   public static readonly SignIn = new RoutePath(
     RouteGroup.VisitorTop,
     ['/signin', null],
@@ -83,7 +107,7 @@ export class RoutePath {
       'https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=choewy32@gmail.com',
       null,
     ],
-    '이메일 문의',
+    'Contact',
     EmailIcon,
     true,
   );
@@ -92,9 +116,19 @@ export class RoutePath {
     private readonly group: number,
     public readonly url: [string, string | null],
     public readonly text: string,
-    public readonly Icon: SvgIconComponent,
+    public readonly Icon: SvgIconComponent | null,
     public readonly isBlank: boolean,
   ) {}
+
+  public static getVisitorPaths(): string[] {
+    return [this.Home, this.Auth, this.SignIn, this.SignUp].map(
+      ({ url }) => url[0],
+    );
+  }
+
+  public static getSignPaths(): string[] {
+    return [this.SignIn, this.SignUp].map(({ url }) => url[0]);
+  }
 
   public static findByGroup(group: RouteGroup): RoutePath[] {
     const descriptors = Object.getOwnPropertyDescriptors(this);

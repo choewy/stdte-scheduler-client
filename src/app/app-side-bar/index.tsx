@@ -4,9 +4,11 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { appState, authState } from '@/states';
 import { AppSideBarList } from './side-bar-list';
 import { RouteGroup, RoutePath } from '@/common/constants';
+import { UserStatus } from '@/apis/auth';
 
 const AppSideBar: FC = () => {
   const [{ openSidebar }, setAppSetting] = useRecoilState(appState);
+
   const auth = useRecoilValue(authState);
 
   const onCloseEvent = useCallback(
@@ -37,11 +39,15 @@ const AppSideBar: FC = () => {
       >
         <AppSideBarList items={RoutePath.findByGroup(RouteGroup.CommonTop)} />
 
-        <AppSideBarList
-          items={RoutePath.findByGroup(
-            auth ? RouteGroup.UserTop : RouteGroup.VisitorTop,
-          )}
-        />
+        {auth && auth.status === UserStatus.Accept && (
+          <AppSideBarList items={RoutePath.findByGroup(RouteGroup.UserTop)} />
+        )}
+
+        {!auth && (
+          <AppSideBarList
+            items={RoutePath.findByGroup(RouteGroup.VisitorTop)}
+          />
+        )}
 
         <AppSideBarList items={RoutePath.findByGroup(RouteGroup.Outer)} />
 

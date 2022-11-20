@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { authState } from '@/states';
 import { Avatar, Button, IconButton } from '@mui/material';
 import { useRecoilValue } from 'recoil';
@@ -9,9 +9,12 @@ export const AppNavBarMenus: FC = () => {
   const navigate = useNavigate();
   const auth = useRecoilValue(authState);
 
-  const onLinkEvent = (url: string) => () => {
-    navigate(url, { replace: true });
-  };
+  const onLinkEvent = useCallback(
+    (url: string) => () => {
+      navigate(url, { replace: true });
+    },
+    [auth],
+  );
 
   return auth ? (
     <IconButton sx={{ p: 0 }}>

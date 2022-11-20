@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react';
+import { FC, MouseEvent, useCallback } from 'react';
 import {
   ListItem,
   ListItemButton,
@@ -18,20 +18,20 @@ export const AppSideBarListItem: FC<AppSideBarListItemProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const onLinkEvent = useCallback(() => {
-    if (isBlank) {
-      return window.open(url[0]);
-    }
-
-    return navigate(url[0], { replace: true });
-  }, [url, isBlank]);
+  const onLinkEvent = useCallback(
+    (e: MouseEvent) => {
+      if (isBlank) {
+        return window.open(url[0]);
+      }
+      return navigate(url[0], { replace: true });
+    },
+    [url, isBlank],
+  );
 
   return (
     <ListItem key={text} disablePadding>
       <ListItemButton onClick={onLinkEvent}>
-        <ListItemIcon>
-          <Icon />
-        </ListItemIcon>
+        <ListItemIcon>{Icon && <Icon />}</ListItemIcon>
         <ListItemText primary={text} />
       </ListItemButton>
     </ListItem>

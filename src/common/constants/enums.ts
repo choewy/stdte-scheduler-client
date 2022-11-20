@@ -4,4 +4,5 @@ export enum RouteGroup {
   VisitorTop = 2,
   Outer = 3,
   UserBottom = 4,
+  Hidden = 99,
 }

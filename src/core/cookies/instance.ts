@@ -26,6 +26,6 @@ export class CookieInstance {
 
   protected reset() {
     cookies.remove(CookieKey.AccessToken, this.options);
-    cookies.remove(CookieKey.AccessToken, this.options);
+    cookies.remove(CookieKey.RefreshToken, this.options);
   }
 }
